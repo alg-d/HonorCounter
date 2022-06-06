@@ -85,13 +85,11 @@ namespace HonorCounter
                 {
                     ResultEvent?.Invoke(true);
                     _pickFlag = false;
-                    b.Save(@$"H:\test\VICTORY{DateTime.Now.ToString("yyyyMMddHHmmss")}.png");
                 }
                 else if (ImageMatch(target, _pathLose))
                 {
                     ResultEvent?.Invoke(false);
                     _pickFlag = false;
-                    b.Save(@$"H:\test\LOSE{DateTime.Now.ToString("yyyyMMddHHmmss")}.png");
                 }
             }
         }
@@ -109,7 +107,6 @@ namespace HonorCounter
                 if (ImageMatch(target, _pathPick))
                 {
                     _pickFlag = true;
-                    b.Save(@$"H:\test\PICK{DateTime.Now.ToString("yyyyMMddHHmmss")}.png");
                 }
             }
         }
