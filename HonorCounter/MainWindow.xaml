@@ -1,0 +1,122 @@
+﻿<Window x:Class="HonorCounter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HonorCounter"
+        mc:Ignorable="d"
+        Title="HonorCounter" Height="550" Width="550">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="7,1"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Window.Resources>
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label      Grid.Column="0" Grid.Row="0" Content="①対象ウィンドウ" />
+        <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" >
+            <ComboBox ItemsSource="{Binding WindowList}" SelectedItem="{Binding SelectedWindow}" Width="250" IsEnabled="{Binding IsStopping}" />
+            <Button   Content="一覧更新" Command="{Binding ReloadCommand}" Margin="5,0" />
+            <Button   Content="②確認" Command="{Binding CheckCommand}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Orientation="Horizontal" Margin="5" >
+            <Button Content="③スタート" Command="{Binding StartCommand}" />
+            <Button Content="④ストップ" Command="{Binding StopCommand}" Margin="5,0" />
+        </StackPanel>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Text="{Binding DisplayText}" Padding="10"
+                   FontFamily="{Binding FontFamily}" FontSize="{Binding FontSize}" Foreground="{Binding Foreground}" Background="{Binding Background}"/>
+
+        <Label     Grid.Column="0" Grid.Row="3" Content="フォント名" />
+        <TextBox   Grid.Column="1" Grid.Row="3" Text="{Binding FontFamilyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Button    Grid.Column="2" Grid.Row="3" Grid.RowSpan="2" Content="設定" Command="{Binding SelectFontCommand}" />
+        <Label     Grid.Column="3" Grid.Row="3" Content="①キンスレのウィンドウを選択します" Margin="10,0" />
+
+        <Label     Grid.Column="0" Grid.Row="4" Content="フォントサイズ" />
+        <TextBox   Grid.Column="1" Grid.Row="4" Text="{Binding FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label     Grid.Column="3" Grid.Row="4" Content="②選択したウィンドウを確認します" Margin="10,0" />
+
+        <Label     Grid.Column="0" Grid.Row="5" Content="文字色" />
+        <TextBox   Grid.Column="1" Grid.Row="5" Text="{Binding ForegroundText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Button    Grid.Column="2" Grid.Row="5" Content="設定" Command="{Binding SelectForegroundCommand}" />
+        <Label     Grid.Column="3" Grid.Row="5" Content="③自動カウント処理を開始します" Margin="10,0" />
+
+        <Label     Grid.Column="0" Grid.Row="6" Content="背景色" />
+        <TextBox   Grid.Column="1" Grid.Row="6" Text="{Binding BackgroundText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Button    Grid.Column="2" Grid.Row="6" Content="設定" Command="{Binding SelectBackgroundCommand}" />
+        <Label     Grid.Column="3" Grid.Row="6" Content="④処理を停止します" Margin="10,0" />
+
+        <Label     Grid.Column="0" Grid.Row="7" Content="フォーマット" />
+        <TextBox   Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" Text="{Binding Format, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Grid      Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Label     Grid.Column="0" Grid.Row="0" Content="{}{0}: 勝ち数" HorizontalAlignment="Center" />
+            <Label     Grid.Column="1" Grid.Row="0" Content="{}{1}: 負け数" HorizontalAlignment="Center" />
+            <Label     Grid.Column="2" Grid.Row="0" Content="{}{2}: 試合数" HorizontalAlignment="Center" />
+            <Label     Grid.Column="3" Grid.Row="0" Content="{}{3}: 連勝数" HorizontalAlignment="Center" />
+            
+            <Button    Grid.Column="0" Grid.Row="1" Content="+" Command="{Binding ValueCommand}" CommandParameter="1" FontSize="36" Margin="5" />
+            <Button    Grid.Column="1" Grid.Row="1" Content="+" Command="{Binding ValueCommand}" CommandParameter="2" FontSize="36" Margin="5" />
+            <Button    Grid.Column="2" Grid.Row="1" Content="+" Command="{Binding ValueCommand}" CommandParameter="3" FontSize="36" Margin="5" />
+            <Button    Grid.Column="3" Grid.Row="1" Content="+" Command="{Binding ValueCommand}" CommandParameter="4" FontSize="36" Margin="5" />
+
+            <Button    Grid.Column="0" Grid.Row="2" Content="-" Command="{Binding ValueCommand}" CommandParameter="-1" FontSize="36" Margin="5" />
+            <Button    Grid.Column="1" Grid.Row="2" Content="-" Command="{Binding ValueCommand}" CommandParameter="-2" FontSize="36" Margin="5" />
+            <Button    Grid.Column="2" Grid.Row="2" Content="-" Command="{Binding ValueCommand}" CommandParameter="-3" FontSize="36" Margin="5" />
+            <Button    Grid.Column="3" Grid.Row="2" Content="-" Command="{Binding ValueCommand}" CommandParameter="-4" FontSize="36" Margin="5" />
+
+            <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Orientation="Horizontal" Margin="5,0,5,5" >
+                <Button Content="リセット" Command="{Binding ResetCommand}" />
+                <Button Content="コピー" Command="{Binding CopyCommand}" Margin="5,0" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
