@@ -307,6 +307,15 @@ namespace HonorCounter
                                 }
                                 RaisePropertyChanged(nameof(DisplayText));
                             };
+                            _model.ErrorEvent += () =>
+                            {
+                                Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    StopCommand.Execute();
+                                    MessageBox.Show("ウィンドウの取得に失敗しました。");
+                                    GetWindowList();
+                                });
+                            };
                             _model.Start();
 
                             StopCommand.RaiseCanExecuteChanged();
@@ -374,6 +383,11 @@ namespace HonorCounter
                             {
                                 var w = new CheckWindow(bitmap);
                                 w.ShowDialog();
+                            }
+                            else
+                            {
+                                MessageBox.Show("ウィンドウの取得に失敗しました。");
+                                GetWindowList();
                             }
                         }
                     },

@@ -37,7 +37,12 @@ namespace HonorCounter
         /// 勝敗が決まったときに発生するイベント
         /// </summary>
         public event Action<bool>? ResultEvent;
-        
+
+        /// <summary>
+        /// ウィンドウ取得失敗時のイベント
+        /// </summary>
+        public event Action? ErrorEvent;
+
         static MainModel()
         {
             var directory = System.AppDomain.CurrentDomain.BaseDirectory;
@@ -56,6 +61,7 @@ namespace HonorCounter
                 {
                     if (bitmap == null)
                     {
+                        ErrorEvent?.Invoke();
                         return;
                     }
 

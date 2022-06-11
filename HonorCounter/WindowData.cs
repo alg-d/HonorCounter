@@ -48,7 +48,7 @@ namespace HonorCounter
         /// <returns>取得したスクリーンショット(失敗時はnull)</returns>
         public Bitmap? Capture()
         {
-            GetWindowRect(_handle, out RECT rect);
+            GetWindowRect(_handle, out var rect);
 
             var rectWidth = rect.right - rect.left;
             var rectHeight = rect.bottom - rect.top;
